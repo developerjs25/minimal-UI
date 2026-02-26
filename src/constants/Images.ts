@@ -1,0 +1,30 @@
+const Mainlogo = "src/assets/images/logo.png"
+const Dashboard = "src/assets/images/dashboard.png"
+const users = "src/assets/images/ic-user (1).svg"
+const Analytics = "src/assets/images/analytics.png"
+const TrendUp = "src/assets/images/TreandIcon.png"
+const microsoft = "src/assets/images/ic-microsoft-1.webp"
+const opera = "src/assets/images/ic-opera-2.webp"
+const adobe = "src/assets/images/ic-adobe-3.webp"
+const jolin = "src/assets/images/ic-jolin-4.webp"
+const topaz = "src/assets/images/ic-topaz-5.webp"
+const Download = "src/assets/images/download.png"
+const size = "src/assets/images/size.png"
+const Profile = "src/assets/images/avatar-25.webp"
+const avtar1 = "src/assets/images/avatar-3.webp"
+const avtar2 = "src/assets/images/avatar-4.webp"
+const Homeicon = "src/assets/images/homeicon.png"
+const Profileicon = "src/assets/images/profile.png"
+const Projecticon = "src/assets/images/Projecticon.png"
+const select1 = "src/assets/images/select-logo-1.webp"
+const select2 = "src/assets/images/select-logo-2.webp"
+const select3 = "src/assets/images/select-logo-3.webp"
+const shiping = "src/assets/images/shipping.png"
+const shiped = "src/assets/images/shipped.png"
+const message = "src/assets/images/massege.png"
+const mail = "src/assets/images/mail.png"
+
+
+
+export default {Mainlogo, Dashboard, users, Analytics ,TrendUp, microsoft, opera, adobe, jolin, topaz, Download, size, Profile , avtar1, avtar2, Homeicon, Profileicon,  Projecticon , select1, select2, select3, shiping, shiped, message, mail};
+
