@@ -1,4 +1,4 @@
 export const FONTS = {
-  primary: "'Inter', sans-serif",
+  primary: "'Public Sans', sans-serif",
   secondary: "'Roboto', sans-serif",
 };

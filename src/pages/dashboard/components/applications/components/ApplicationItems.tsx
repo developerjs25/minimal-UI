@@ -1,5 +1,5 @@
 import Images from "../../../../../constants/Images";
-import type { AppItem } from "../../../types";
+import type { AppItem } from "../../../../../Types";
 
 
 export const apps: AppItem[] = [

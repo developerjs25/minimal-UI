@@ -29,7 +29,7 @@ const Application: React.FC = () => {
                                         </Stack>
                                         <Stack direction="row" spacing={2} mt={0.5} alignItems="center">
                                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Box component="img" src={Images.Download} alt="Downloads" sx={{ width: 14, height: 14, }} />
+                                                {/* <Box component="img" src={Images.Download} alt="Downloads" sx={{ width: 14, height: 14, }} /> */}
                                                 <Typography variant="caption"> {app.downloads}</Typography>
                                             </Stack>
                                             <Stack direction="row" spacing={0.5} alignItems="center">

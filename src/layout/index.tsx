@@ -1,29 +1,33 @@
 import { useState } from "react";
 import Sidebar from "../components/ui/sidebar/index";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery} from "@mui/material";
 import Header from "../components/ui/header/index";
+// import Footer from "../components/ui/footer";
 
 const Layout = ({ children }: any) => {
-    const [open, setOpen] = useState<boolean>(true);
+  const isMobile = useMediaQuery("(max-width:1200px)");
 
-    const toggleSidebar = () => {
-        setOpen(!open);
-    };
+  const [open, setOpen] = useState<boolean>(!isMobile);
 
-    const drawerWidth = open ? 300 : 90;
+  const toggleSidebar = () => {
+    setOpen((prev) => !prev);
+  };
 
-    return (
-        <Box sx={{ display: "flex", minHeight: "100vh" , }}>
-            <Sidebar open={open} toggleSidebar={toggleSidebar} />
-            <Box sx={{ flexGrow: 1, transition: "margin 0.2s", marginLeft: `${drawerWidth}px` }}>
-                <Header />
-                <Box sx={{ p: 3 }}>
-                    {children}
-                </Box>
-            </Box>
+  const drawerWidth = open ? 300 : 90;
+
+  return (
+    <Box sx={{}}>
+      <Sidebar open={open} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+      <Box sx={{ transition: "margin 0.2s", marginLeft: { xs: 0, lg: `${drawerWidth}px`, }, }}>
+        <Header toggleSidebar={toggleSidebar} showMenu={isMobile} />
+        <Box>
+          {children}
         </Box>
+        {/* <Footer/> */}
+      </Box>
+    </Box>
 
-    );
+  );
 };
 
-export default Layout;  
+export default Layout;
