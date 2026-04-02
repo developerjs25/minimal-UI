@@ -50,6 +50,19 @@ export interface UserList {
   status: string;
 }
 
+export interface OrderList {
+  id: number;
+  image: string;
+  name: string;
+  email: string;
+  number: string;
+  items: string;
+  time: string;
+  date: string;
+  price: string;
+  status: string;
+}
+
 export interface ProductList {
   id: number;
   image: string;
@@ -177,3 +190,53 @@ export  interface TypeBackground {
           
   }
 }
+
+// action button 
+
+export type ActionMenuProps = {
+  onView: () => void;
+  onEdit?: () => void;   // ✅ correct
+  onDelete: () => void;
+  firstlink?: string;
+  secoundlink?:string;
+  thirdlink?: string;
+
+};
+
+// order details
+
+export type Order = {
+  id: number;
+  status: string;
+  date: string;
+  time: string;
+  items: string;
+
+  product: {
+    name: string;
+    sku: string;
+    image: string;
+    quantity: number;
+    price: number;
+  };
+  subtotal: number;
+  shipping: number;
+  discount: number;
+  taxes: number;
+  total: number;
+  customer: {
+    name: string;
+    image: string;
+    email: string;
+    ip: string;
+  };
+  delivery: {
+    shipBy: string;
+    speed: string;
+    tracking: string;
+  };
+  shippingAddress: {
+    address: string;
+    phone: string;
+  };
+};

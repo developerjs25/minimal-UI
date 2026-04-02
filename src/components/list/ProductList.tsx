@@ -1,24 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  TablePagination,
-  Checkbox,
-  TextField,
-  Stack,
-  LinearProgress,
-  InputAdornment,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Card, CardContent, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, TablePagination,
+  Checkbox, TextField, Stack, LinearProgress, InputAdornment, CircularProgress,} from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
@@ -228,7 +210,7 @@ const List: React.FC = () => {
                                 color={getProductStatusStyle(product.status).color} />
                             </TableCell>
                             <TableCell align="right">
-                              <ActionMenu onView={() => console.log("View")}
+                              <ActionMenu firstlink="View" secoundlink="Edit" thirdlink="Delete" onView={() => console.log("View")}
                                 onEdit={() => navigate(`/products/edit/${product.id}`)}
                                 onDelete={() => { setSelectedUserId(product.id); setOpenDeletePopup(true); }} />
 

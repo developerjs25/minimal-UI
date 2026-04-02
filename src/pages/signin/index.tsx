@@ -5,10 +5,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ListButton } from "../../components/button/CustomButton";
 import Images from "../../constants/Images";
 import { useTheme } from "@mui/material/styles";
-import { Logosvg } from "../../components/Svgs";
+import { Logosvg } from "../../components/svgs";
 import Settings from "../../components/ui/settings";
 
-const LoginPage: React.FC = () => {
+const SigninPage: React.FC = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const theme = useTheme();
     return (
@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
                             "& input": { padding: "14px", },
                         }}
                         />
-                        <TextField fullWidth placeholder="Enter your email address" type={showPassword ? "text" : "password"} sx={{
+                        <TextField fullWidth placeholder="Enter your password" type={showPassword ? "text" : "password"} sx={{
                             mb: 3,
                             "& .MuiOutlinedInput-root": {
                                 borderRadius: "12px",
@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton onClick={() => setShowPassword(!showPassword)}>
-                                            {showPassword ? <VisibilityOff sx={{ color: theme.palette.background.whiteBlack, }} /> : <Visibility sx={{ color: theme.palette.background.whiteBlack, }} />}
+                                            {showPassword ? <Visibility sx={{ color: theme.palette.background.whiteBlack, }} /> : <VisibilityOff sx={{ color: theme.palette.background.whiteBlack, }} />}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
@@ -81,4 +81,4 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;
+export default SigninPage;

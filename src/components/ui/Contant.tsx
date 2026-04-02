@@ -11,6 +11,10 @@ export const productItems = [
     { label: "List", path: "/products/list" },
     { label: "Create", path: "/products/create" },
 ];
+export const orderItems = [
+    { label: "List", path: "/order/list" },
+    { label: "Details", path: "/order/details/6011" },
+];
 
 export const options: OptionType[] = [
     { label: "Team 1", badge: "Free", image: Images.select1, chipBackground: "#eceff3" },

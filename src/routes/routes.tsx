@@ -12,6 +12,8 @@ import CreateUser from "../pages/users/create";
 import Notification from "../pages/notification";
 import CreateProduct from "../pages/products/create";
 import ViewUser from "../pages/users/view";
+import OrderList from "../pages/order/list";
+import OrderDetails from "../pages/order/details";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +31,8 @@ const AppRoutes = () => {
         <Route path="/products/create" element={<CreateProduct />} />
         <Route path="/products/list" element={<ProductList />} />
         <Route path="/products/details/:id" element={<ProductDetails />} />
+        <Route path="/order/list" element={<OrderList />} />
+        <Route path="/order/details/:id" element={<OrderDetails />} />
       </Routes>
     </Layout>
   );
