@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import DeletePopup from "../popup/Deletepopup";
 import ActionMenu from "../ActionMenu";
 import { useTheme } from "@mui/material/styles";
+import { SyncLoader } from "react-spinners";
 
 
 const List: React.FC = () => {
@@ -80,8 +81,13 @@ const List: React.FC = () => {
     };
 
     const allCount = orders.length;
-    const activeCount = orders.filter((i) => i.status === "completed").length;
-    const pendingCount = orders.filter((i) => i.status === "Pending").length;
+    const completedCount = orders.filter((i) => i.status.toLowerCase() === "completed").length;
+    const pendingCount = orders.filter((i) => i.status.toLowerCase() === "pending").length
+
+    const statusMap: Record<string, string> = {
+        "2": "pending",
+        "3": "completed",
+    };
 
     const filteredRows =
         value === "1"
@@ -90,7 +96,7 @@ const List: React.FC = () => {
             )
             : orders.filter(
                 (inv) =>
-                    inv.status === (value === "2" ? "completed" : "Pending") &&
+                    inv.status.toLowerCase() === statusMap[value] &&
                     inv.customer.name.toLowerCase().includes(search.toLowerCase())
             );
 
@@ -114,18 +120,20 @@ const List: React.FC = () => {
                                     </Box>} value="1" />
                                 <Tab sx={{ "&.Mui-selected": { color: theme.palette.background.whiteBlack }, textTransform: "none", }} label={
                                     <Box display="flex" alignItems="center" gap={1}>Pending
-                                        <StyledChip label={pendingCount.toString()} bgcolor={value === "3" ? "#ffb84d" : "#fdebd1"} color={value === "3" ? "black.main" : "#B76E00"} />
-                                    </Box>} value="3" />
+                                        <StyledChip label={pendingCount.toString()} bgcolor={value === "2" ? "#ffb84d" : "#fdebd1"} color={value === "2" ? "black.main" : "#B76E00"} />
+                                    </Box>} value="2" />
                                 <Tab sx={{ "&.Mui-selected": { color: theme.palette.background.whiteBlack }, textTransform: "none", }} label={
                                     <Box display="flex" alignItems="center" gap={1}> Completed
-                                        <StyledChip label={activeCount.toString()} bgcolor={value === "2" ? "#22C55E" : "green.light"} color={value === "2" ? "white.main" : "#00A76F"} />
-                                    </Box>} value="2" />
+                                        <StyledChip label={completedCount.toString()} bgcolor={value === "3" ? "#22C55E" : "green.light"} color={value === "3" ? "white.main" : "#00A76F"} />
+                                    </Box>} value="3" />
                             </TabList>
                         </Box>
                         <TabPanel value={value} sx={{ p: 0 }}>
-                            <TextField placeholder="Search customer or order number..." size="small" value={search} onChange={(e) => setSearch(e.target.value)} sx={{ width: { xs: "100%", sm: 300, md: 400, lg: 550 }, 
-                            "& .MuiOutlinedInput-root": { borderRadius: 2, py: 1, m: { xs: 1, sm: 2 }, }, 
-                            "&.Mui-focused fieldset": { borderColor: "#212B36", }, "&.Mui-active fieldset": { borderColor: "#212B36", }, }}
+                            <TextField placeholder="Search customer..." size="small" value={search} onChange={(e) => setSearch(e.target.value)} sx={{
+                                width: { xs: "100%", sm: 300, md: 400, lg: 550 },
+                                "& .MuiOutlinedInput-root": { borderRadius: 2, py: 1, m: { xs: 1, sm: 2 }, },
+                                "&.Mui-focused fieldset": { borderColor: "#212B36", }, "&.Mui-active fieldset": { borderColor: "#212B36", },
+                            }}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -143,8 +151,10 @@ const List: React.FC = () => {
                                                 <Checkbox indeterminate={selected.length > 0 && selected.length < filteredRows.length}
                                                     checked={filteredRows.length > 0 && selected.length === filteredRows.length}
                                                     onChange={handleSelectAll}
-                                                    sx={{ color: "#637381", "&.Mui-checked": { color: "green.main" }, "&.MuiCheckbox-indeterminate": { color: "green.main" }, 
-                                                    "& .MuiSvgIcon-root": { borderRadius: "50%", width: 20, height: 20, }, }} />
+                                                    sx={{
+                                                        color: "#637381", "&.Mui-checked": { color: "green.main" }, "&.MuiCheckbox-indeterminate": { color: "green.main" },
+                                                        "& .MuiSvgIcon-root": { borderRadius: "50%", width: 20, height: 20, },
+                                                    }} />
                                             </TableCell>
                                             <TableCell sx={{ fontFamily: FONTS.primary, fontWeight: 550, color: "#637381" }}> Order</TableCell>
                                             <TableCell sx={{ fontFamily: FONTS.primary, fontWeight: 550, color: "#637381" }}>Customer</TableCell>
@@ -160,6 +170,7 @@ const List: React.FC = () => {
                                             <TableCell colSpan={7} align="center">
                                                 <Box sx={{ py: 6, display: "flex", justifyContent: "center", alignItems: "center", }}>
                                                     <CircularProgress sx={{ color: "green.main" }} />
+                                                    {/* <SyncLoader color={theme.palette.green.main} loading={true} /> */}
                                                 </Box>
                                             </TableCell>
                                         </TableRow>
@@ -176,14 +187,18 @@ const List: React.FC = () => {
                                             {paginatedRows.map((order) => {
                                                 const isItemSelected = isSelected(order.id);
                                                 return (
-                                                    <TableRow key={order.id} selected={isItemSelected} hover sx={{ cursor: "pointer", 
-                                                    "&:hover": { backgroundColor: isItemSelected ? "rgba(0, 167, 111, 0.2)" : "rgba(0, 167, 111, 0.08)", }, 
-                                                    "&.Mui-selected": { backgroundColor: "rgba(105, 240, 195, 0.16)", "&:hover": { backgroundColor: "rgba(0, 167, 111, 0.2)", }, }, }}>
+                                                    <TableRow key={order.id} selected={isItemSelected} hover sx={{
+                                                        cursor: "pointer",
+                                                        "&:hover": { backgroundColor: isItemSelected ? "rgba(0, 167, 111, 0.2)" : "rgba(0, 167, 111, 0.08)", },
+                                                        "&.Mui-selected": { backgroundColor: "rgba(105, 240, 195, 0.16)", "&:hover": { backgroundColor: "rgba(0, 167, 111, 0.2)", }, },
+                                                    }}>
                                                         <TableCell padding="checkbox" >
-                                                            <Checkbox checked={isItemSelected} onChange={() => handleSelectRow(order.id)} sx={{ color: "#637381", "&.Mui-checked": { color: "green.main" }, 
-                                                            "& .MuiSvgIcon-root": { borderRadius: "50%", width: 20, height: 20 }, }} />
+                                                            <Checkbox checked={isItemSelected} onChange={() => handleSelectRow(order.id)} sx={{
+                                                                color: "#637381", "&.Mui-checked": { color: "green.main" },
+                                                                "& .MuiSvgIcon-root": { borderRadius: "50%", width: 20, height: 20 },
+                                                            }} />
                                                         </TableCell>
-                                                        <TableCell  sx={{ textDecoration: "underline" }}>#{order.id}</TableCell>
+                                                        <TableCell sx={{ textDecoration: "underline" }}>#{order.id}</TableCell>
                                                         <TableCell>
                                                             <Box display="flex" alignItems="center" gap={1}>
                                                                 <Box component="img" src={order.customer.image} alt={order.customer.name} sx={{ width: 40, height: 40, borderRadius: "50%", }} />
@@ -206,7 +221,7 @@ const List: React.FC = () => {
                                                                 color={getUserStatusStyle(order.status).color} />
                                                         </TableCell>
                                                         <TableCell align="right">
-                                                            <ActionMenu firstlink="View" secoundlink="Edit" thirdlink="Delete" onView={() => navigate(`/order/details/${order.id}`)}
+                                                            <ActionMenu firstlink="View" secoundlink="Edit" thirdlink="Delete" onView={() => navigate(`/app/order/details/${order.id}`)}
                                                                 onDelete={() => { setSelectedUserId(order.id); setOpenDeletePopup(true); }} />
                                                             <DeletePopup open={openDeletePopup}
                                                                 onClose={() => setOpenDeletePopup(false)}
@@ -220,8 +235,8 @@ const List: React.FC = () => {
                                 </Table>
                             </TableContainer>
                             <Stack direction="row" justifyContent="end" px={2}>
-                                <TablePagination component="div" count={filteredRows.length} page={page} onPageChange={handleChangePage} rowsPerPage={rowsPerPage} 
-                                onRowsPerPageChange={handleChangeRowsPerPage} rowsPerPageOptions={[5, 10, 25]} />
+                                <TablePagination component="div" count={filteredRows.length} page={page} onPageChange={handleChangePage} rowsPerPage={rowsPerPage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage} rowsPerPageOptions={[5, 10, 25]} />
                             </Stack>
                         </TabPanel>
                     </TabContext>

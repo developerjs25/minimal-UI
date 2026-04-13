@@ -8,6 +8,7 @@ import { COLORS } from "../../../constants/colors";
 import { useColorSettings } from "../../../theme/ThemeContext";
 import { useTheme } from "@mui/material/styles";
 import { ColorImage } from "../Contant";
+import Images  from "../../../constants/Images";
 
 
 export default function Settings() {
@@ -30,30 +31,43 @@ export default function Settings() {
             </Box>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)} PaperProps={{ sx: { width: 320, backdropFilter: "blur(4px)", transition: "all 0.3s ease", }, }}
                 ModalProps={{ BackdropProps: { sx: { backgroundColor: 'transparent' }, }, }} >
-                <Box sx={{ height: "100%", display: "flex", flexDirection: "column", px: 2 , backgroundColor: theme.palette.background.blurBackground}}>
+                <Box sx={{ height: "100%", display: "flex", flexDirection: "column", px: 2, backgroundColor: theme.palette.background.blurBackground }}>
                     <Box sx={{ py: 2, display: "flex", justifyContent: "space-between", alignItems: "center", }}>
                         <Typography variant="h6" fontWeight={600}>Settings</Typography>
                         <IconButton onClick={toggleDrawer(false)}><CloseIcon /></IconButton>
                     </Box>
-                    <Box sx={{ border: "1px solid #919eab1f", borderRadius: 4, p: 2, mb: 3 }}>
-                        <Stack direction="row" spacing={2} mb={3} justifyContent="space-between">
-                            <Typography fontWeight={600}>Mode</Typography>
-                            <Box>
-                                {mode === "dark" ? <DarkModeIcon sx={{ color: "green.main" }} /> : <LightModeIcon sx={{ color: "green.main" }} />}
+                    <Box sx={{ position: "relative", border: "1px solid #919eab1f", borderRadius: 4, p: 3, mb: 3.5, }}>
+                        <Stack direction="row" spacing={2} alignItems="center" mb={3} justifyContent="space-between">
+                            <Typography fontWeight={600} fontSize={15} color="text.primary">Mode</Typography>
+                            <Box sx={{
+                                width: 26, height: 26, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "green.main", color: "white",
+                                transition: "all 0.25s ease",
+                                "&:hover": { transform: "scale(1.1)", boxShadow: "0 3px 10px rgba(52, 211, 153, 0.4)", },
+                            }}>
+                                {mode === "dark" ? (<DarkModeIcon sx={{ fontSize: 16 }} />) : (<LightModeIcon sx={{ fontSize: 16 }} />)}
                             </Box>
                         </Stack>
-                        <Stack direction="row" spacing={2} justifyContent="space-between">
-                            <Button variant="contained" fullWidth sx={{
-                                height: 35, mt: 2, textTransform: "none", borderRadius: 2, fontWeight: 600,
-                                bgcolor: mode === "dark" ? theme.palette.background.buttonHover : "green.main", color: mode === "dark" ? "green.main" : theme.palette.background.buttonHover
-                            }} onClick={() => toggleMode("light")}>Light</Button>
-                            <Button variant="contained" fullWidth sx={{
-                                height: 35, mt: 2, textTransform: "none", borderRadius: 2, fontWeight: 600,
-                                bgcolor: mode === "dark" ? "green.main" : theme.palette.background.buttonHover, color: mode === "dark" ? theme.palette.background.buttonHover : "green.main"
-                            }} onClick={() => toggleMode("dark")}>Dark</Button>
-                        </Stack>
+                        <Box sx={{ display: "flex", position: "relative", border: "1px solid #919eab1f", borderRadius: 4, overflow: "hidden", height: 44, }}>
+                            <Box sx={{
+                                position: "absolute", left: mode === "light" ? 0 : "50%", width: "50%", height: "100%", bgcolor: "green.main", borderRadius: 4,
+                                transition: "left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", zIndex: 1, boxShadow: "0 2px 8px rgba(52,211,153,0.35)",
+                            }} />
+
+                            <Button onClick={() => toggleMode("light")} fullWidth disableRipple sx={{
+                                zIndex: 2, fontWeight: 600, textTransform: "none", fontSize: 14, color: theme.palette.background.whiteBlack, 
+                                "&:hover": { bgcolor: "transparent" },
+                            }}>
+                                Light
+                            </Button>
+                            <Button onClick={() => toggleMode("dark")} fullWidth disableRipple sx={{
+                                zIndex: 2, fontWeight: 600, textTransform: "none", fontSize: 14, color: theme.palette.background.whiteBlack,
+                                 "&:hover": { bgcolor: "transparent" },
+                            }}>
+                                Dark
+                            </Button>
+                        </Box>
                     </Box>
-                    <Box sx={{ border: "1px solid #919eab1f", borderRadius: 4, p: 2 }}>
+                    <Box sx={{ border: "1px solid #919eab1f", borderRadius: 4, p: 2 ,mb: 3.5}}>
                         <Typography fontWeight={600} mb={2}>Color</Typography>
                         <Grid container spacing={1}>
                             <Grid size={{ xs: 13, sm: 6, md: 4 }}>
@@ -102,6 +116,47 @@ export default function Settings() {
                                     "&:focus": { backgroundColor: "#ff303014" },
                                 }}>
                                     <ColorImage />
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    <Box sx={{ border: "1px solid #919eab1f", borderRadius: 4, p: 2 }}>
+                        <Typography fontWeight={600} mb={2}>Font Family</Typography>
+                        <Grid container spacing={3}>
+                            <Grid size={{ xs: 13, sm: 6, md: 6 }}>
+                                <Button variant="outlined" sx={{
+                                    flexDirection: "column", gap: 1, borderRadius: 3, width: "100%", py: 3, border: "none",color: "#919EAB" ,
+                                    "&:focus": { backgroundColor:theme.palette.background.buttonHover, boxShadow: "0px 3px 18px 1px rgba(77, 77, 77, 0.2)"  },
+                                }}>
+                                    <Box component="img" src={Images.fontfamily} alt="font"/>
+                                    <Typography fontWeight={600} fontSize={12} sx={{ textTransform: 'none',}} > Public Sans</Typography>
+                                </Button>
+                            </Grid>
+                            <Grid size={{ xs: 13, sm: 6, md: 6 }}>
+                                <Button variant="outlined" sx={{
+                                    flexDirection: "column", gap: 1, borderRadius: 3, width: "100%", py: 3, border: "none",color: "#919EAB" ,
+                                    "&:focus": { backgroundColor:theme.palette.background.buttonHover, boxShadow: "0px 3px 18px 1px rgba(77, 77, 77, 0.2)" },
+                                }}>
+                                    <Box component="img" src={Images.fontfamily} alt="font"/>
+                                    <Typography fontWeight={600} fontSize={12} sx={{ textTransform: 'none' }} >Inter</Typography>
+                                </Button>
+                            </Grid>
+                            <Grid size={{ xs: 13, sm: 6, md: 6 }}>
+                                <Button variant="outlined" sx={{
+                                    flexDirection: "column", gap: 1, borderRadius: 3, width: "100%", py: 3, border: "none",color: "#919EAB" ,
+                                    "&:focus": { backgroundColor:theme.palette.background.buttonHover, boxShadow: "0px 3px 18px 1px rgba(77, 77, 77, 0.2)" },
+                                }}>
+                                     <Box component="img" src={Images.fontfamily} alt="font"/>
+                                    <Typography fontWeight={600} fontSize={12} sx={{ textTransform: 'none'}} >DM Sans</Typography>
+                                </Button>
+                            </Grid>
+                            <Grid size={{ xs: 13, sm: 6, md: 6 }}>
+                                <Button variant="outlined" sx={{
+                                    flexDirection: "column", gap: 1, borderRadius: 3, width: "100%", py: 3, border: "none",color: "#919EAB" ,
+                                    "&:focus": { backgroundColor:theme.palette.background.buttonHover, boxShadow: "0px 3px 18px 1px rgba(77, 77, 77, 0.2)"},
+                                }}>
+                                     <Box component="img" src={Images.fontfamily} alt="font"/>
+                                    <Typography fontWeight={600} fontSize={12} sx={{ textTransform: 'none' }} >Nunito Sans</Typography>
                                 </Button>
                             </Grid>
                         </Grid>

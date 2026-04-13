@@ -40,7 +40,7 @@ export const orders: Order[] = [
   },
   {
     id: 6011,
-    status: "Completed",
+    status: "completed",
     date: "30 Mar 2026 7:44 am",
     time: "1:19 pm",
     items: "2",
@@ -74,7 +74,7 @@ export const orders: Order[] = [
   },
   {
     id: 6012,
-    status: "Pending",
+    status: "pending",
     date: "29 Mar 2026 3:44 am",
     time: "3:19 pm",
     items: "4",
@@ -108,7 +108,7 @@ export const orders: Order[] = [
   },
    {
     id: 6013,
-    status: "Pending",
+    status: "pending",
     date: "26 Mar 2026 3:44 am",
     time: "3:19 pm",
     items: "4",
@@ -142,7 +142,7 @@ export const orders: Order[] = [
   },
    {
     id: 6014,
-    status: "Refunded",
+    status: "refunded",
     date: "28 Mar 2026 3:44 am",
     time: "3:19 pm",
     items: "4",
@@ -176,7 +176,7 @@ export const orders: Order[] = [
   },
    {
     id: 6015,
-    status: "Pending",
+    status: "pending",
     date: "27 Mar 2026 3:44 am",
     time: "3:19 pm",
     items: "4",

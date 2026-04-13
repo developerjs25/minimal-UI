@@ -4,16 +4,16 @@ import type { OptionType } from "../../Types";
 
 
 export const userItems = [
-    { label: "List", path: "/user/list" },
-    { label: "Create", path: "/user/create" },
+    { label: "List", path: "/app/user/list" },
+    { label: "Create", path: "/app/user/create" },
 ];
 export const productItems = [
-    { label: "List", path: "/products/list" },
-    { label: "Create", path: "/products/create" },
+    { label: "List", path: "/app/products/list" },
+    { label: "Create", path: "/app/products/create" },
 ];
 export const orderItems = [
-    { label: "List", path: "/order/list" },
-    { label: "Details", path: "/order/details/6011" },
+    { label: "List", path: "/app/order/list" },
+    { label: "Details", path: "/app/order/details/6011" },
 ];
 
 export const options: OptionType[] = [

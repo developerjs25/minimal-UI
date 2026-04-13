@@ -13,13 +13,13 @@ const Layout = ({ children }: any) => {
     setOpen((prev) => !prev);
   };
 
-  const drawerWidth = open ? 300 : 90;
+  const drawerWidth = open ? 276 : 90;
 
   return (
     <Box sx={{}}>
       <Sidebar open={open} toggleSidebar={toggleSidebar} isMobile={isMobile} />
       <Box sx={{ transition: "margin 0.2s", marginLeft: { xs: 0, lg: `${drawerWidth}px`, }, }}>
-        <Header toggleSidebar={toggleSidebar} showMenu={isMobile} />
+        <Header toggleSidebar={toggleSidebar} showMenu={isMobile} open={open} />
         <Box>
           {children}
         </Box>

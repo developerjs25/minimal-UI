@@ -1,41 +1,56 @@
 import { Box, Typography, Avatar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import CameraEnhanceIcon from "@mui/icons-material/CameraEnhance";
-import StyledChip from "../../../components/chip";
-import { getUserStatusStyle } from "../../../components/contact/UserContant";
 import type { ImageBoxProps } from "../../../Types";
 import { useTheme } from "@mui/material/styles";
 
 
-const ImageBox: React.FC<ImageBoxProps> = ({ image, status, error = false, onChange }) => {
+const ImageBox: React.FC<ImageBoxProps> = ({ image, error = false, onChange }) => {
     const [preview, setPreview] = useState<string>("");
-   const theme = useTheme();
+    const theme = useTheme();
 
-    useEffect(() => {
-        if (image) {
-            setPreview(image);
-        }
-    }, [image]);
+ useEffect(() => {
+    if (image && typeof image === "string") {
+        setPreview(image);
+    }
+}, [image]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
         if (!selectedFile) return;
-        const imageUrl = URL.createObjectURL(selectedFile);
-        setPreview(imageUrl);
 
-        if (onChange) {
-            onChange(imageUrl);
+        const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/gif",
+            "image/webp",
+        ];
+
+
+        if (!allowedTypes.includes(selectedFile.type)) {
+            alert("Only JPG, JPEG, PNG, GIF, and WEBP files are allowed");
+            return;
         }
+
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const result = e.target?.result as string;
+            setPreview(result);
+            if (onChange) {
+                onChange(result);
+            }
+        };
+        reader.readAsDataURL(selectedFile);
     };
-
-
     return (
-        <Box sx={{ width: { xs: "100%", md: 400 }, height: 400, boxShadow: "0 3px 10px rgba(133, 131, 131, 0.12)", borderRadius: 2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 2, p: 2, position: "relative", }}>
-            {status && (
+        <Box sx={{ width: { xs: "100%", md: 450 }, height: 420, boxShadow: "0 3px 10px rgba(133, 131, 131, 0.12)", borderRadius: 2, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 2, p: 2, position: "relative", }}>
+            {/* {status && (
                 <Box sx={{ position: "absolute", top: 16, right: 16 }}>
                     <StyledChip label={status} bgcolor={getUserStatusStyle(status).backgroundColor} color={getUserStatusStyle(status).color} />
                 </Box>
-            )}
+            )} */}
             <input hidden accept="image/*" id="avatar-upload" type="file" onChange={handleFileChange} />
             <Box component="label" htmlFor="avatar-upload" sx={{ cursor: "pointer", borderRadius: "50%", position: "relative", border: error ? "1px dashed #FF5630" : "1px dashed #e7e7e7", p: 1, "&:hover .overlay": { opacity: 1 }, }}>
                 <Avatar src={preview || undefined} sx={{ width: 120, height: 120, backgroundColor: theme.palette.background.TableRowColor, color: "#888888", }}>

@@ -14,8 +14,9 @@ import avtar2 from "../assets/images/avatar-4.webp";
 import Homeicon from "../assets/images/homeicon.png";
 import Profileicon from "../assets/images/profile.png";
 import Projecticon from "../assets/images/Projecticon.png";
-import Usericon from "../assets/images/users.png";
+import Usericon from "../assets/images/main-user.png";
 import Producticon from "../assets/images/products.png";
+import Ordericon from "../assets/images/order.png";
 import select1 from "../assets/images/select-logo-1.webp";
 import select2 from "../assets/images/select-logo-2.webp";
 import select3 from "../assets/images/select-logo-3.webp";
@@ -45,7 +46,7 @@ import signinImage from "../assets/images/sigin-24.png";
 
 export default {
   Mainlogo, Dashboard, responsiveheadericon, TrendUp, microsoft, opera, adobe, jolin, topaz, size,
-  Profile, avtar1, avtar2, Homeicon, Profileicon, Projecticon, Usericon, Producticon, select1, select2, select3, shiping, shiped, message, mail, avtar3,
+  Profile, avtar1, avtar2, Homeicon, Profileicon, Projecticon, Usericon, Producticon,Ordericon, select1, select2, select3, shiping, shiped, message, mail, avtar3,
   avtar4, avtar5, avtar6, avtar7, profilebg, product1, product2, product3, product4, product5, product6, product7, product8,
   imageinput, BgTop, BgBottom, fontfamily, signinImage,
 };

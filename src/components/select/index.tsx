@@ -5,8 +5,12 @@ import { Box, Chip, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import type { OptionType } from '../../Types';
 import { options } from '../ui/Contant';
 import { useTheme } from "@mui/material/styles";
+import Select, { type SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl'
 
-const HeaderSelecter = () => {
+
+export const HeaderSelecter = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [value, setValue] = React.useState<OptionType>(options[0]);
     const open = Boolean(anchorEl);
@@ -24,19 +28,21 @@ const HeaderSelecter = () => {
 
 
     return (
-        <Box sx={{ minWidth: { xs: 0, md: 130 }  }}>
+        <Box sx={{ minWidth: { xs: 0, md: 130 } }}>
             <Box onClick={handleClick} sx={{ px: 1, py: 0.5, borderRadius: 2, cursor: "pointer", backgroundColor: theme.palette.background.default, display: "flex", justifyContent: "center", alignItems: "center", }}>
                 <Stack direction="row" alignItems="center" spacing={1}>
                     <Box component="img" src={value.image} sx={{ width: 25, height: 25 }} />
-                    <Typography sx={{ fontWeight: 550, fontSize: 15,    display: { xs: "none", sm: "block" }}}> {value.label}</Typography>
-                    <Chip label={value.badge} size="small" sx={{  display: { xs: "none", sm: "flex" }, borderRadius: 1.3, fontWeight: 700, backgroundColor: value.chipBackground, color: value.badge === "Free" ? "black.main" : "primary.main", fontSize: 12, height: 20, }} />
+                    <Typography sx={{ fontWeight: 550, fontSize: 15, display: { xs: "none", sm: "block" } }}> {value.label}</Typography>
+                    <Chip label={value.badge} size="small" sx={{ display: { xs: "none", sm: "flex" }, borderRadius: 1.3, fontWeight: 700, backgroundColor: value.chipBackground, color: value.badge === "Free" ? "black.main" : "primary.main", fontSize: 12, height: 20, }} />
                 </Stack>
                 <Box sx={{ ml: 1 }}><UnfoldMoreIcon sx={{ color: "neutral.main", fontSize: 16 }} /></Box>
             </Box>
             <Menu anchorEl={anchorEl} open={open} onClose={() => handleClose()} PaperProps={{ sx: { backgroundImage: ` url('../assets/images/download (1).svg'),  url('../assets/images/download.svg')`, backgroundPosition: "top right, bottom left", backgroundRepeat: "no-repeat, no-repeat", backgroundSize: "200px 200px, 200px 200px", p: 0.5, py: 0.5, borderRadius: 3, boxShadow: "0 8px 24px black.main", width: 230, }, }}>
                 {options.map((item) => (
-                    <MenuItem key={item.label} onClick={() => handleClose(item)} sx={{ fontSize: 14, px: 0.5, py: 1.5, borderRadius: 2,
-                     "&:hover": { opacity:2 }, "&:focus": { opacity:4  }, }}>
+                    <MenuItem key={item.label} onClick={() => handleClose(item)} sx={{
+                        fontSize: 14, px: 0.5, py: 1.5, borderRadius: 2,
+                        "&:hover": { opacity: 2 }, "&:focus": { opacity: 4 },
+                    }}>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
                             <Stack direction="row" alignItems="center">
                                 <Box component="img" src={item.image} sx={{ width: 25, height: 25, }} />
@@ -59,4 +65,38 @@ const HeaderSelecter = () => {
     )
 }
 
-export default HeaderSelecter
+
+export default function StatusSelecter({onChange , value , error, helperText = ""}: any) {
+    const [status, setStatus] = React.useState('');
+    const theme = useTheme();
+
+    const handleChange = (event: SelectChangeEvent<string>) => {
+            setStatus(event.target.value);
+            onChange(event.target.value);
+            
+    };
+    return (
+        <Box sx={{ minWidth: "100%" }}>
+               <FormControl fullWidth variant="outlined" error={error}>
+                <InputLabel id="demo-simple-select-label" sx={{ color: error ? "#FF5630" :  "#999fa5",}}>Status</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={value || status}
+                    label="Status"
+                   
+                    onChange={handleChange}
+                    sx={{ backgroundColor: theme.palette.background.default, borderRadius: 2, "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor:error ? "#FF5630" :  theme.palette.background.whiteBlack ,   }, "&:hover .MuiOutlinedInput-notchedOutline": { borderColor:error ? "#FF5630" :  theme.palette.background.Inputborder, borderWidth: "1px",   }, }}
+                    MenuProps={{
+                        PaperProps: { sx: { backgroundColor: theme.palette.background.default, borderRadius: 3, mt: 1, boxShadow: "0px 4px 20px rgba(0,0,0,0.1)", } }
+                    }}
+                >
+                    <MenuItem value="Active" sx={{ borderRadius: 2, mx: 1, "&:hover": { backgroundColor: theme.palette.background.buttonHover } }}>Active</MenuItem>
+                    <MenuItem value="Inactive" sx={{ borderRadius: 2, mx: 1, "&:hover": { backgroundColor: theme.palette.background.buttonHover } }}>Inactive</MenuItem>
+                    <MenuItem value="Banned" sx={{ borderRadius: 2, mx: 1, "&:hover": { backgroundColor: theme.palette.background.buttonHover } }}>Banned</MenuItem>
+                </Select>
+            </FormControl>
+        </Box>
+    );
+}
+

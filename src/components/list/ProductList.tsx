@@ -4,13 +4,13 @@ import { Box, Card, CardContent, Grid, Table, TableBody, TableCell, TableContain
 import { TabContext, TabPanel } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import { getProductStatusStyle } from "../contact/ProductContant";
+import { getProductStatusStyle, getStockStatus } from "../contact/ProductContant";
 import StyledChip from "../chip";
 import { productRows } from "../contact/ProductContant";
 import ActionMenu from "../ActionMenu";
 import DeletePopup from "../popup/Deletepopup";
 import { useTheme } from "@mui/material/styles";
-
+import { SyncLoader } from "react-spinners";
 
 const List: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -37,27 +37,7 @@ const List: React.FC = () => {
     console.log("Deleting product with id:", id);
   };
 
-  const getStockStatus = (stock: number) => {
-    if (stock === 0) {
-      return {
-        label: "out of stock",
-        color: "#ff56303d",
-        progress: 100,
-      };
-    }
-    if (stock > 0 && stock <= 10) {
-      return {
-        label: `${stock} low stock`,
-        color: "#FFAB00",
-        progress: (stock / 10) * 100,
-      };
-    }
-    return {
-      label: `${stock} in stock`,
-      color: "#22C55E",
-      progress: 100,
-    };
-  };
+  
 
   const handleSelectRow = (id: number) => {
     const strId = id.toString();
@@ -118,7 +98,7 @@ const List: React.FC = () => {
                 <Table sx={{ minWidth: 960 }}>
                   <TableHead>
                     <TableRow sx={{ backgroundColor: theme.palette.background.TableRowColor }}>
-                      <TableCell padding="checkbox" >
+                      <TableCell padding="checkbox">
                         <Checkbox
                           indeterminate={
                             selected.length > 0 && selected.length < filteredRows.length
@@ -146,7 +126,10 @@ const List: React.FC = () => {
                   {loading ? (
                     <TableRow>
                       <TableCell colSpan={7} align="center">
-                        <Box sx={{ py: 6, display: "flex", justifyContent: "center", alignItems: "center", }}><CircularProgress sx={{ color: "green.main" }} /></Box>
+                        <Box sx={{ py: 6, display: "flex", justifyContent: "center", alignItems: "center", }}>
+                          <SyncLoader color={theme.palette.green.main} loading={true} />
+                          {/* <CircularProgress sx={{ color: "green.main" }} /> */}
+                          </Box>
                       </TableCell>
                     </TableRow>
                   ) : filteredRows.length === 0 ? (
@@ -210,8 +193,8 @@ const List: React.FC = () => {
                                 color={getProductStatusStyle(product.status).color} />
                             </TableCell>
                             <TableCell align="right">
-                              <ActionMenu firstlink="View" secoundlink="Edit" thirdlink="Delete" onView={() => console.log("View")}
-                                onEdit={() => navigate(`/products/edit/${product.id}`)}
+                              <ActionMenu firstlink="View" secoundlink="Edit" thirdlink="Delete" onView={() => navigate(`/app/products/details/${product.id}`)}
+                                onEdit={() => navigate(`/app/products/edit/${product.id}`)}
                                 onDelete={() => { setSelectedUserId(product.id); setOpenDeletePopup(true); }} />
 
                               <DeletePopup open={openDeletePopup}

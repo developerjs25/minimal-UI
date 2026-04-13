@@ -92,3 +92,25 @@ export const getProductStatusStyle = (status: string) => {
       return {};
   }
 };
+
+export const getStockStatus = (stock: number) => {
+    if (stock === 0) {
+      return {
+        label: "out of stock",
+        color: "#ff56303d",
+        progress: 100,
+      };
+    }
+    if (stock > 0 && stock <= 10) {
+      return {
+        label: `${stock} low stock`,
+        color: "#FFAB00",
+        progress: (stock / 10) * 100,
+      };
+    }
+    return {
+      label: `${stock} in stock`,
+      color: "#22C55E",
+      progress: 100,
+    };
+  };

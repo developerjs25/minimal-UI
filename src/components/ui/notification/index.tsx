@@ -18,7 +18,7 @@ export default function Notification() {
     const unreadCount = NotificationContant.filter(n => !n.read).length;
 
     const notificationbutton = () => {
-        navigate("/notification")
+        navigate("/app/notification")
         setOpen(false);
     }
     return (
@@ -29,17 +29,7 @@ export default function Notification() {
                 </Badge>
             </Box>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)} ModalProps={{ BackdropProps: { sx: { backgroundColor: 'transparent' }, }, }}>
-                <Box sx={{ width: 380, height: '100vh',   backgroundImage: `
-      url('../../../assets/images/download (1).svg'),
-      url('../../../assets/images/download.svg')
-    `,
-    backgroundRepeat: 'no-repeat, no-repeat',
-
-    // position both images
-    backgroundPosition: 'top left, bottom right',
-
-    // control size
-    backgroundSize: '150px, 200px',}} role="presentation">
+                <Box sx={{ width: 380, height: '100vh', backgroundColor: theme.palette.background.blurBackground,}} role="presentation">
                     <Card sx={{ border: 0 }} elevation={0}>
                         <CardContent sx={{ p: 0, backgroundColor: theme.palette.background.blurBackground, }}>
                             <Typography variant="h6" fontWeight={600} p={3}>Notification</Typography>

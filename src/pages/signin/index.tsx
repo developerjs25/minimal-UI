@@ -7,10 +7,14 @@ import Images from "../../constants/Images";
 import { useTheme } from "@mui/material/styles";
 import { Logosvg } from "../../components/svgs";
 import Settings from "../../components/ui/settings";
+import { useNavigate } from "react-router-dom";
+
 
 const SigninPage: React.FC = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const theme = useTheme();
+    const navigate = useNavigate();
+
     return (
         <Box sx={{ minHeight: "100vh", backgroundColor: theme.palette.background.default, }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 2 }} >
@@ -19,14 +23,15 @@ const SigninPage: React.FC = () => {
             </Box>
             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 4, }}>
 
-                <Stack direction="row" alignItems="center">
+                <Stack direction="row" spacing={16} alignItems="center">
                     <Box sx={{ p: 6, display: "flex", flexDirection: "column", justifyContent: "center", }} >
                         <Typography variant="h3" sx={{ fontWeight: 700, mb: 2 }} > Welcome to our Minimals</Typography>
                         <Typography sx={{ color: "#6B7280", mb: 4 }}>A whole new productive journey starts right here</Typography>
                         <Box component="img" src={Images.signinImage} alt="illustration" sx={{ width: "80%", maxWidth: 420, }} />
                     </Box>
                     <Box sx={{ p: 6 }}>
-                        <TextField fullWidth placeholder="Enter your email address" sx={{
+                        <Typography variant="h5" fontWeight={600} mb={3} p={0}>Sign in to your account</Typography>
+                        <TextField fullWidth placeholder="Enter your email address" value={"Minimals@minimals.cc"} sx={{
                             mb: 3,
                             "& .MuiOutlinedInput-root": {
                                 borderRadius: "12px",
@@ -38,7 +43,7 @@ const SigninPage: React.FC = () => {
                             "& input": { padding: "14px", },
                         }}
                         />
-                        <TextField fullWidth placeholder="Enter your password" type={showPassword ? "text" : "password"} sx={{
+                        <TextField fullWidth placeholder="Enter your password" type={showPassword ? "text" : "password"} value={"minimals@123"} sx={{
                             mb: 3,
                             "& .MuiOutlinedInput-root": {
                                 borderRadius: "12px",
@@ -72,8 +77,7 @@ const SigninPage: React.FC = () => {
                             />
                             <Link href="#" underline="hover" color="#bbbbbb"> Forgot Password </Link>
                         </Box>
-
-                        <ListButton contant="Sign in" width="100%" />
+                        <ListButton contant="Sign in" width="100%" click={() => navigate("/app")} />
                     </Box>
                 </Stack>
             </Box>

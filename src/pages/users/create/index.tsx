@@ -1,134 +1,191 @@
-import { Box, Stack, Typography, Grid } from "@mui/material";
+import { Box, Stack, Grid } from "@mui/material";
 import ImageBox from "../components/ImageBox";
-import { UserInputField } from "../../../components/input/CustomInput";
+import { CountryInput, PhoneNumberInput, StateInput, UserInputField } from "../../../components/input/CustomInput";
 import { ListButton } from "../../../components/button/CustomButton";
 import Breadcrumb from "../../../components/breadcrumbs";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Snackbar, Alert } from "@mui/material";
+import axios from "axios";
+import Toaster from "../../../components/toaster";
+import StatusSelecter from "../../../components/select";
 
 const CreateUser = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         image: "",
-        fullName: "",
+        firstName: "",
+        lastName: "",
         email: "",
         phone: "",
         country: "",
+        countrycode: "",
         state: "",
         city: "",
-        address: "",
+        address1: "",
+        address2: "",
         zip: "",
-        company: "",
-        role: "",
+        status: "",
     });
+
     const [openToast, setOpenToast] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
-    const handleChange = (field: string, value: string) => {
-        setFormData({ ...formData, [field]: value });
-        if (value.trim() !== "") {
-            setErrors({ ...errors, [field]: false });
-        }
+    // const handleChange = (field: string, value: string) => {
+    //     setFormData({ ...formData, [field]: value });
+    //     if (value.trim() !== "") {
+    //         setErrors({ ...errors, [field]: false });
+    //     }
+    // };
+    const handleChange = (field: string, value: any) => {
+        setFormData((prev: any) => {
+            const updated = {
+                ...prev,
+                [field]: value,
+            };
+
+            // ✅ RESET STATE when country changes
+            if (field === "countrycode") {
+                updated.state = "";
+            }
+
+            return updated;
+        });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newErrors: { [key: string]: boolean } = {};
-
-        Object.entries(formData).forEach(([key, value]) => {
-            if (!value.trim()) newErrors[key] = true;
+        Object.keys(formData).forEach((key) => {
+            if (!formData[key as keyof typeof formData]?.trim()) {
+                newErrors[key] = true;
+            }
         });
 
-        setErrors(newErrors);
-         console.log(formData);
-         
-        if (Object.keys(newErrors).length === 0) {
-            setOpenToast(true);
+        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
+        if (!emailRegex.test(formData.email)) {
+            alert("Invalid email format");
+            return;
+        }
+
+        if (Object.keys(newErrors).length > 1) {
+            setErrors(newErrors);
+            return;
+        }
+
+        try {
+            const resp = await axios.post("http://localhost:3003/data", formData, {
+                headers: { "Content-Type": "application/json" },
+            });
+            console.log(resp.data);
+
+            setOpenToast(true);
             setTimeout(() => {
-                navigate("/user/list");
+                navigate("/app/user/list");
             }, 1500);
+        } catch (err) {
+            console.error("Error submitting form:", err);
         }
     };
+
     return (
-        <Box sx={{ px: 14, pt: 0 }}>
-            <Typography variant="h5" fontWeight={600} mb={3} p={0}>Create user</Typography>
-            <Breadcrumb link1="/" linkName1="Dashboard" link2="/user/profile" linkName2="User" link3="/user/list" linkName3="Create user" />
-            <Stack direction={{ xs: "column", md: "row" }} spacing={3} mt={3}>
-                <ImageBox error={errors.image} image={formData.image}  onChange={(img) => handleChange("image", img)}/>
-                <Box sx={{ width: { xs: "100%", md: 950 }, height: "auto", boxShadow: "0 3px 10px rgba(133, 131, 131, 0.12)", borderRadius: 2, alignItems: "center", p: 3, gap: 3, }}>
+        <Box sx={{ maxWidth: 1500, mx: "auto", pb: 9, pt: 5 }}>
+            <Box px={2} pb={3}>
+                <Breadcrumb link1="/" linkName1="Users" link2="/app/user/list" linkName2="List" link3="/app/user/create" linkName3="Create user" />
+            </Box>
+            <Stack direction={{ xs: "column", md: "row" }} spacing={10} mt={3}>
+                <ImageBox error={errors.image} image={formData.image} onChange={(img) => handleChange("image", img)} />
+                <Box sx={{
+                    width: { xs: "100%", md: 1010 }, height: "auto", boxShadow: "0 3px 10px rgba(133, 131, 131, 0.12)", borderRadius: 2,
+                    alignItems: "center", p: 3, gap: 3,
+                }}>
                     <Grid container spacing={3}>
                         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Full name" value={formData.fullName}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("fullName", e.target.value)}
-                                error={errors.fullName}
+                            <UserInputField PlaceHolder="First name" value={formData.firstName}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("firstName", e.target.value)}
+                                error={errors.firstName}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Email address" value={formData.email}
+                            <UserInputField PlaceHolder="Last name" value={formData.lastName}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("lastName", e.target.value)}
+                                error={errors.lastName}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+                            <UserInputField PlaceHolder="Email" value={formData.email}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("email", e.target.value)}
                                 error={errors.email}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Phone number" value={formData.phone}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("phone", e.target.value)}
-                                error={errors.phone}
+                            <PhoneNumberInput
+                                value={formData.phone}
+                                country={formData.countrycode}
+                                onChange={(data) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        phone: data.phone,
+                                        countrycode: data.countrycode,
+                                    }));
+                                }}
                             />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Country" value={formData.country}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("country", e.target.value)}
-                                error={errors.country}
-                            />
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="State/region" value={formData.state}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("state", e.target.value)}
-                                error={errors.state}
-                            />
-                        </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <UserInputField PlaceHolder="City" value={formData.city}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("city", e.target.value)}
                                 error={errors.city}
                             />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Address" value={formData.address}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("address", e.target.value)}
-                                error={errors.address}
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <StateInput
+                                countryCode={formData.countrycode}
+                                value={formData.state}
+                                onChange={(value) => handleChange("state", value)}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            {/* <CountryInput PlaceHolder="Country" value={formData.country}
+                                onChange={(e) => handleChange("country", e.target.value)}
+                                error={errors.country}
+                            /> */}
+                            <CountryInput
+                                PlaceHolder="Country"
+                                value={formData.country}
+                                onChange={(e: any) => {
+                                    handleChange("country", e.target.value);
+                                    handleChange("countrycode", e.target.countryCode);
+                                }}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Zip/code" value={formData.zip}
+                            <UserInputField PlaceHolder="Address1" value={formData.address1}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("address1", e.target.value)}
+                                error={errors.address1}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+                            <UserInputField PlaceHolder="Address2" value={formData.address2}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("address2", e.target.value)}
+                                error={errors.address2}
+                            />
+                        </Grid>
+                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
+                            <UserInputField PlaceHolder="Zip/Postal code" value={formData.zip}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("zip", e.target.value)}
                                 error={errors.zip}
                             />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Company" value={formData.company}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("company", e.target.value)}
-                                error={errors.company}
-                            />
+                            <StatusSelecter onChange={(value: string) => handleChange("status", value)} />
                         </Grid>
-                        <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                            <UserInputField PlaceHolder="Role" value={formData.role}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("role", e.target.value)}
-                                error={errors.role}
-                            />
-                        </Grid>
+
                     </Grid>
                     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                         <ListButton contant="Create user" click={handleSubmit} />
                     </Box>
                 </Box>
             </Stack>
-            <Snackbar open={openToast} autoHideDuration={2000} onClose={() => setOpenToast(false)}anchorOrigin={{ vertical: "top", horizontal: "right" }} >
-                <Alert severity="success" variant="filled" onClose={() => setOpenToast(false)} >
-                    User created successfully!
-                </Alert>
-            </Snackbar>
+            <Toaster openToast={openToast} setOpenToast={setOpenToast} contant="User created successfully!" />
         </Box>
     );
 };

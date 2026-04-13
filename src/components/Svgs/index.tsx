@@ -14,3 +14,57 @@ export const Logosvg = () => {
             </path></svg>
     )
 }
+// export const CountryInput: React.FC<UserInputFieldProps> = ({ PlaceHolder, error = false, helperText = "", value = "", onChange }) => {
+//   const theme = useTheme();
+//   return (
+//     <Autocomplete
+//       id="country-select-demo"
+//       sx={{ width: 300 }}
+//       options={countries}
+//       autoHighlight
+//       getOptionLabel={(option) => option.label}
+//       value={countries.find(c => c.label === value) || null}
+
+//   onChange={(event, newValue) => {
+//     const syntheticEvent = {
+//       target: { value: newValue ? newValue.label : "" }
+//     } as React.ChangeEvent<HTMLInputElement>;
+//     onChange?.(syntheticEvent);
+//   }}
+//        slotProps={{ paper: { sx: { backgroundColor: theme.palette.background.listColor, borderRadius: 2, }, }, }}
+//       renderOption={(props, option) => {
+//         const { key, ...optionProps } = props;
+        
+//         return (
+//           <Box key={key} component="li"sx={{ '& > img': { mr: 2, flexShrink: 0 }, borderRadius: 2, mb: 1, mx: 1,
+//            "&:hover": { backgroundColor: theme.palette.background.buttonHover }, }}{...optionProps}>
+//             <img loading="lazy" width="20" height="20" srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`} 
+//             src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}alt=""style={{ borderRadius: "50%", objectFit: "cover" }}/>
+//             {option.label} ({option.code})
+//           </Box>
+//         );
+//       }}
+//       renderInput={(params) => (
+//         <TextField
+//           {...params}
+//           label={PlaceHolder} helperText={error ? helperText : ""}
+//           sx={{
+//             "& .MuiOutlinedInput-root": {borderRadius: 2,"&.Mui-focused fieldset": { borderColor: theme.palette.background.Inputborder, borderWidth: "1px", },
+//             },
+//             "& .MuiInputLabel-root": { color: "#999fa5", },
+//             "& .MuiInputLabel-root.Mui-focused": { color: theme.palette.background.whiteBlack, },
+//           }}
+
+//           InputProps={{
+//             ...params.InputProps,
+//             sx: { color: "#999fa5" },
+//           }}
+//           inputProps={{
+//             ...params.inputProps,
+//             style: { color: "#999fa5" },
+//           }}
+//         />
+//       )}
+//     />
+//   );
+// }

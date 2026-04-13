@@ -8,8 +8,8 @@ const Breadcrumb = ({ link1, linkName1, link2, linkName2, link3, linkName3 }: an
     return (
         <Box>
             <Breadcrumbs separator="•" aria-label="breadcrumb">
-                <Link underline="hover" color="inherit" href={link1} sx={{ fontSize: 14, color: theme.palette.background.whiteBlack, fontFamily: FONTS.primary, }}>{linkName1}</Link>
-                <Link underline="hover" color="inherit" href={link2} sx={{ fontSize: 14, color: theme.palette.background.whiteBlack, fontFamily: FONTS.primary, }}>{linkName2}</Link>
+                <Link underline="hover" color="inherit" href={link1} sx={{ fontSize: 14, color: theme.palette.background.whiteBlack,}}>{linkName1}</Link>
+                <Link underline="hover" color="inherit" href={link2} sx={{ fontSize: 14, color: theme.palette.background.whiteBlack,}}>{linkName2}</Link>
                 <Link underline="hover" color="inherit" href={link3} sx={{ color: 'primary.light', fontFamily: FONTS.primary, }}>{linkName3}</Link>
             </Breadcrumbs>
         </Box>

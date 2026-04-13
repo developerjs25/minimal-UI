@@ -13,7 +13,7 @@ const OrderList = () => {
                 </Box>
             </Stack>
             <Box px={2}>
-                <Breadcrumb link1="/" linkName1="Dashboard" link2="/order/list" linkName2="Order" link3="/order/list" linkName3="List" />
+                <Breadcrumb link1="/" linkName1="Dashboard" link2="/app/order/list" linkName2="Order" link3="/app/order/list" linkName3="List" />
             </Box>
             <List />
         </Box>

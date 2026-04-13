@@ -8,7 +8,7 @@ const CreateProduct = () => {
         <Box sx={{ pt: 0 ,px: 9}}>
                 <Box>
                     <Typography variant="h5" fontWeight={700} mb={3} p={0} sx={{ fontFamily: FONTS.primary, }}>Create</Typography>
-                    <Breadcrumb link1="/" linkName1="Dashboard" link2="/products/list" linkName2="Product" link3="/products/create" linkName3="Create" />
+                    <Breadcrumb link1="/" linkName1="Dashboard" link2="/app/products/list" linkName2="Product" link3="/app/products/create" linkName3="Create" />
                 </Box>
                <ProductForm/>
         </Box>

@@ -15,11 +15,11 @@ const ProductList = () => {
                     <Typography variant="h5" fontWeight={700} mb={3} p={0} sx={{ fontFamily: FONTS.primary, }}>Product List</Typography>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "flex-end", }}>
-                    <ListButton contant="Add Product" icon={<AddIcon sx={{ fontSize: 16, mr: 1 }} />} click={() => navigate("/products/create")} />
+                    <ListButton contant="Add Product" icon={<AddIcon sx={{ fontSize: 16, mr: 1 }} />} click={() => navigate("/app/products/create")} />
                 </Box>
             </Stack>
             <Box px={2}>
-                <Breadcrumb link1="/" linkName1="Dashboard" link2="/products/list" linkName2="Product" link3="/products/list" linkName3="List" />
+                <Breadcrumb link1="/" linkName1="Dashboard" link2="/app/products/list" linkName2="Product" link3="/app/products/list" linkName3="List" />
             </Box>
             <List />
         </Box>

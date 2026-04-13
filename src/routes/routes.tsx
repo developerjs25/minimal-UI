@@ -1,7 +1,7 @@
 import Layout from "../layout";
-import Dashboard from "../pages/dashboard";
+// import Dashboard from "../pages/dashboard";
 // import UserList from "../src/pages/users/";
-import Profile from "../pages/users/profile"; 
+import Profile from "../pages/users/profile";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProductList from "../pages/products/list";
 import EditProduct from "../pages/products/edit";
@@ -14,25 +14,30 @@ import CreateProduct from "../pages/products/create";
 import ViewUser from "../pages/users/view";
 import OrderList from "../pages/order/list";
 import OrderDetails from "../pages/order/details";
+import Myaccount from "../pages/myaccount";
 
 const AppRoutes = () => {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/user/profile" element={<Profile />} />
-        <Route path="/user/edit/:id" element={<EditUser/>} />
-        <Route path="/user/create" element={<CreateUser/>} />
-        <Route path="/user/list" element={<List />} />
-        <Route path="/user/view/:id" element={<ViewUser />} />
-        <Route path="/products/edit/:id" element={<EditProduct />} />
-        <Route path="/products/create" element={<CreateProduct />} />
-        <Route path="/products/list" element={<ProductList />} />
-        <Route path="/products/details/:id" element={<ProductDetails />} />
-        <Route path="/order/list" element={<OrderList />} />
-        <Route path="/order/details/:id" element={<OrderDetails />} />
+        <Route path="/" element={<Navigate to="user/list" />} />
+
+        <Route path="user/list/*" element={<List />} />
+        <Route path="user/profile" element={<Profile />} />
+        <Route path="user/edit/:id" element={<EditUser />} />
+        <Route path="user/create" element={<CreateUser />} />
+        <Route path="user/view/:id" element={<ViewUser />} />
+
+        <Route path="products/edit/:id" element={<EditProduct />} />
+        <Route path="products/create" element={<CreateProduct />} />
+        <Route path="products/list" element={<ProductList />} />
+        <Route path="products/details/:id" element={<ProductDetails />} />
+
+        <Route path="order/list" element={<OrderList />} />
+        <Route path="order/details/:id" element={<OrderDetails />} />
+
+        <Route path="notification" element={<Notification />} />
+        <Route path="myaccount" element={<Myaccount />} />
       </Routes>
     </Layout>
   );

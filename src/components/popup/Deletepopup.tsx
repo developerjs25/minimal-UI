@@ -9,7 +9,7 @@ const DeleteDialog = ({ open, onClose, onConfirm, }: DeleteDialogProps) => {
     return (
         <Dialog open={open} onClose={onClose} BackdropProps={{ sx: { backgroundColor: "rgba(116, 116, 116, 0.15)", opacity: 999, }, }}
             PaperProps={{ sx: { borderRadius: 4, minWidth: { xs: 280, sm: 450 }, p: 0.6, boxShadow: "-40px 40px 80px -8px rgba(0,0,0,0.15)", },
-             backgroundColor: theme.palette.background.whiteBlack }}>
+             backgroundColor: theme.palette.background.whiteBlack, }}>
             <DialogTitle sx={{ fontWeight: 700, fontSize: 18, pb: 1.5, }}>Delete</DialogTitle>
             <DialogContent sx={{ pb: 2 }}>
                 <Typography sx={{ color: "#637381", fontSize: 14 }}>Are you sure want to delete?</Typography>

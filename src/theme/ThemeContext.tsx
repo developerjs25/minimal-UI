@@ -1,98 +1,6 @@
-// import React, { createContext, useContext, useState, useMemo } from "react";
-// import { createTheme, ThemeProvider} from "@mui/material/styles";
-// import { COLORS as initialColors } from "../constants/colors";
-// import { FONTS } from "../constants/fonts";
-
-// interface ColorContextType {
-//   mode: "light" | "dark";
-//   setMainColor: (color: string) => void;
-//   toggleMode: () => void; 
-// }
-
-// const ColorContext = createContext<ColorContextType | undefined>(undefined);
-
-// export const useColorSettings = () => {
-//   const context = useContext(ColorContext);
-//   if (!context) throw new Error("useColorSettings must be used within AppThemeProvider");
-//   return context;
-// };
-
-// export const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [greenColor, setGreenColor] = useState(initialColors.green.main);
-//   const [mode, setMode] = useState<"light" | "dark">("light");
 
 
-//   const theme = useMemo(() => 
-//     createTheme({
-//       palette: {
-//         mode,
-//         primary: {
-//           ...initialColors.green,
-//           main: greenColor,
-//         },
-//         background: {
-//           default: mode === "light" ? "#ffffff" : "#161c24",
-//           paper: mode === "light" ? "#ffffff" : "#212b36",
-//         },
-//         text: {
-//           primary: mode === "light" ? "#212b36" : "#ffffff",
-//           secondary: "#637381",
-//         },
-//       },
-//       typography: {
-//         fontFamily: FONTS.primary,
-//       },
-//     }), [greenColor, mode]);
-
-//   const toggleMode = () => setMode((prev) => (prev === "light" ? "dark" : "light"));
-
-//   return (
-//     <ColorContext.Provider value={{ setMainColor: setGreenColor, toggleMode, mode }}>
-//       <ThemeProvider theme={theme}>
-//         {children}
-//       </ThemeProvider>
-//     </ColorContext.Provider>
-//   );
-// };
-// import React, { createContext, useContext, useState, useMemo } from "react";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { COLORS as initialColors } from "../constants/colors";
-// import { FONTS } from "../constants/fonts";
-
-// const ColorContext = createContext({
-//   setMainColor: (color: string) => {},
-// });
-
-// export const useColorSettings = () => useContext(ColorContext);
-
-// export const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [greenColor, setGreenColor] = useState(initialColors.green.main);
-
-//   const theme = useMemo(() => 
-//     createTheme({
-//       palette: {
-//         ...initialColors, 
-//         green: {
-//           ...initialColors.green,
-//           main: greenColor, 
-//         },
-//       },
-
-//       typography: {
-//         fontFamily: FONTS.primary,
-//       },
-//     }), [greenColor]);
-
-//   return (
-//     <ColorContext.Provider value={{ setMainColor: setGreenColor }}>
-//       <ThemeProvider theme={theme}>
-//         {children}
-//       </ThemeProvider>
-//     </ColorContext.Provider>
-//   );
-// };
-
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { COLORS } from "../constants/colors";
 import { FONTS } from "../constants/fonts";
@@ -110,7 +18,15 @@ export const useColorSettings = () => {
 
 export const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [dynamicGreen, setDynamicGreen] = useState(COLORS.green);
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<"light" | "dark">(() => {
+    const savedMode = localStorage.getItem("themeMode");
+    return (savedMode as "light" | "dark") || "light";
+  });
+
+  
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+  }, [mode]);
 
   const theme = useMemo(() =>
     createTheme({
@@ -144,6 +60,9 @@ export const AppThemeProvider = ({ children }: { children: React.ReactNode }) =>
           logoutButtonColor: mode === "light" ? "#B71D18" : " #FFAC82",
           logoutButtonbg: mode === "light" ? "#fdb6a680" : " #ce6a5480",
           signininputbg: mode === "light" ? "#f3f6fb" : " #1C252E",
+          Sidebarmenu: mode === "light" ? "#ffffffe6" : " #1c252ee6",
+          Inputborder: mode === "light" ? "#212B36" : " #999fa5",
+          Menubg: mode === "light" ? "#ffff" : " #04111f",
         },
         text: {
           primary: mode === "light" ? "#141A21" : "#ffffff",

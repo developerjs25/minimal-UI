@@ -38,12 +38,17 @@ export interface UserList {
   id: number;
   image: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
+  
   number: string;
   country: string;
+    countrycode?: string;
   role: string;
   city: string;
-  address: string;
+  address1: string;
+  address2: string;
   state: string;
   zip: string;
   company: string;
@@ -119,10 +124,38 @@ export interface DeleteDialogProps {
 }
 // components, input
 export interface UserInputFieldProps {
-  PlaceHolder: string;
+  PlaceHolder?: string;
   value?: string;
   row?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
+  helperText?: string;
+  country?: any;
+  onCountryChange?: (country: any) => void;
+}
+
+//phone number input 
+export interface PhoneInputFieldProps {
+  PlaceHolder?: string;
+  value?: string;
+  row?: number;
+
+  // 👇 supports both normal inputs & phone input
+ onChange?: (data: {
+  phone: string;
+  countrycode: string;
+}) => void;
+  error?: boolean;
+  helperText?: string;
+  country?: any;
+}
+
+// state input props
+
+export interface StateProps {
+  countryCode?: string; // IN, US, AE
+  value?: string;
+  onChange?: (value: string) => void;
   error?: boolean;
   helperText?: string;
 }
@@ -187,6 +220,9 @@ export  interface TypeBackground {
     logoutButtonColor: string;
     logoutButtonbg: string;
     signininputbg: string;
+    Sidebarmenu: string;
+    Inputborder: string;
+    Menubg: string;
           
   }
 }
@@ -240,3 +276,36 @@ export type Order = {
     phone: string;
   };
 };
+
+//myaccount
+
+export interface UserData {
+    image: string;
+    name: string;
+    email: string;
+    number: string;
+    country: string;
+    role: string;
+    city: string;
+    address: string;
+    state: string;
+    zip: string;
+    company: string;
+    status: string;
+    password: string;
+    confirmPassword: string;
+}
+
+export interface FormErrors {
+    password?: string;
+    confirmPassword?: string;
+}
+
+//create user
+
+export interface CountryType {
+  code: string;
+  label: string;
+  phone: string;
+  suggested?: boolean;
+}
